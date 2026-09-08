@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>黔址优选 | UI 方向对比</title>
+    <style>
+      :root {
+        --ink: #14231f;
+        --muted: #66786f;
+        --line: #d8e3de;
+        --green: #1f6b4f;
+        --green2: #33a06f;
+        --teal: #24777a;
+        --amber: #bd7b1d;
+        --red: #bd4b42;
+        --blue: #326a8c;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background: #eef2ef;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+      }
+      button, input, select { font: inherit; }
+      button { cursor: pointer; }
+      h1, h2, h3, p { margin: 0; }
+      .shell { min-height: 100vh; display: grid; grid-template-rows: 68px minmax(0, 1fr); }
+      .top {
+        display: grid;
+        grid-template-columns: 310px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 16px;
+        padding: 0 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255,255,255,.96);
+      }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .mark {
+        display: grid; place-items: center;
+        width: 42px; height: 42px; border-radius: 10px;
+        color: #fff; font-weight: 900; font-size: 20px;
+        background: linear-gradient(135deg, var(--green), var(--teal));
+      }
+      .brand h1 { font-size: 20px; }
+      .brand p { margin-top: 5px; color: var(--muted); font-size: 12px; }
+      .tabs {
+        display: inline-flex;
+        width: max-content;
+        gap: 5px;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #f7faf8;
+      }
+      .tabs button {
+        min-height: 34px;
+        padding: 0 14px;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        color: #355047;
+        font-size: 13px;
+        font-weight: 900;
+      }
+      .tabs button.active { background: #fff; color: var(--green); box-shadow: 0 8px 22px rgba(20,35,31,.08); }
+      .btn {
+        min-height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: #fff;
+        color: #263d35;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .api-status {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: #355047;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .stage { padding: 14px; }
+      .concept { display: none; min-height: calc(100vh - 96px); }
+      .concept.active { display: block; }
+
+      /* Direction A */
+      .screen-a {
+        min-height: calc(100vh - 96px);
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr) 330px;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 18px;
+        background:
+          radial-gradient(circle at 22% 20%, rgba(51,160,111,.16), transparent 28%),
+          linear-gradient(135deg, #0e261f, #143b31 58%, #10251f);
+        color: #edf8f2;
+      }
+      .a-panel {
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 14px;
+        background: rgba(255,255,255,.075);
+        backdrop-filter: blur(10px);
+      }
+      .a-head { padding: 13px 14px; border-bottom: 1px solid rgba(255,255,255,.1); display:flex; justify-content:space-between; align-items:center; }
+      .a-head h2 { font-size: 14px; }
+      .a-head span { color: rgba(237,248,242,.62); font-size: 11px; font-weight: 900; }
+      .a-body { padding: 12px; }
+      .a-nav { display:grid; gap:8px; }
+      .a-nav button {
+        min-height: 46px; border:1px solid rgba(255,255,255,.1); border-radius:12px;
+        color:#edf8f2; background:rgba(255,255,255,.055); text-align:left; padding:0 12px; font-weight:900;
+      }
+      .a-nav button.active { background:rgba(51,160,111,.22); border-color:rgba(51,160,111,.45); }
+      .a-kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:12px; }
+      .a-kpi { min-height:82px; padding:12px; border:1px solid rgba(255,255,255,.12); border-radius:14px; background:rgba(255,255,255,.075); }
+      .a-kpi span { color:rgba(237,248,242,.62); font-size:11px; font-weight:800; }
+      .a-kpi strong { display:block; margin-top:10px; font-size:28px; }
+      .a-map {
+        position:relative; min-height:540px; overflow:hidden; border-radius:16px;
+        border:1px solid rgba(255,255,255,.12);
+        background:
+          linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
+          linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+          radial-gradient(circle at 52% 46%, rgba(51,160,111,.18), transparent 34%);
+        background-size: 38px 38px, 38px 38px, auto;
+      }
+      .province { position:absolute; inset:58px 44px 38px; }
+      .province svg { width:100%; height:100%; overflow:visible; }
+      .province path.main { fill:rgba(237,248,242,.12); stroke:rgba(237,248,242,.72); stroke-width:2; }
+      .province path.line { fill:none; stroke:rgba(237,248,242,.22); stroke-width:1.4; }
+      .apoint { position:absolute; z-index:4; display:grid; place-items:center; width:36px; height:36px; border-radius:50%; border:3px solid #fff; background:var(--green2); color:#fff; font-weight:900; transform:translate(-50%,-50%); box-shadow:0 14px 28px rgba(0,0,0,.35); }
+      .apoint.warn { background:var(--amber); }
+      .apoint.danger { background:var(--red); }
+      .atag { position:absolute; z-index:3; width:142px; padding:7px 9px; border:1px solid rgba(255,255,255,.14); border-radius:10px; background:rgba(7,24,20,.72); transform:translate(16px,6px); }
+      .atag strong { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:12px; }
+      .atag span { display:block; margin-top:4px; color:rgba(237,248,242,.62); font-size:11px; }
+      .a-rank { display:grid; gap:8px; }
+      .a-row { display:grid; grid-template-columns:30px minmax(0,1fr) 42px; gap:8px; align-items:center; min-height:44px; padding:8px; border-radius:11px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); }
+      .a-row b { display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:rgba(51,160,111,.22); color:#dff7ea; }
+      .a-row strong { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:12px; }
+      .a-row small { display:block; margin-top:3px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; color:rgba(237,248,242,.62); font-size:11px; }
+      .a-row span { color:#7ce0a9; font-weight:900; font-size:12px; }
+
+      /* Direction B */
+      .screen-b { min-height: calc(100vh - 96px); display:grid; grid-template-rows:58px auto minmax(0,1fr); gap:12px; }
+      .b-top { display:flex; align-items:center; justify-content:space-between; padding:0 16px; border:1px solid var(--line); border-radius:14px; background:#fff; }
+      .b-top h2 { font-size:18px; }
+      .b-top p { margin-top:4px; color:var(--muted); font-size:12px; }
+      .b-filters { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+      .b-filter { min-height:74px; padding:10px; border:1px solid var(--line); border-radius:14px; background:#fff; }
+      .b-filter span { color:var(--muted); font-size:11px; font-weight:900; }
+      .b-filter strong { display:block; margin-top:8px; font-size:18px; }
+      .b-main { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:12px; min-height:560px; }
+      .b-card { border:1px solid var(--line); border-radius:14px; background:#fff; overflow:hidden; }
+      .b-card-head { min-height:46px; padding:12px 14px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+      .b-card-head h3 { font-size:14px; }
+      .b-canvas { position:relative; min-height:516px; background:linear-gradient(180deg,#fbfdfc,#eef5f1); }
+      .b-city { position:absolute; width:170px; padding:10px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:0 12px 28px rgba(20,35,31,.08); }
+      .b-city strong { display:block; font-size:13px; }
+      .b-city span { display:block; margin-top:6px; color:var(--muted); font-size:11px; }
+      .b-city i { display:block; margin-top:9px; height:8px; border-radius:999px; background:linear-gradient(90deg,var(--green2),#dfeae5); }
+      .b-side { display:grid; gap:10px; padding:12px; }
+      .b-score { min-height:150px; display:grid; place-items:center; border-radius:14px; background:#edf7f2; }
+      .b-score strong { font-size:46px; color:var(--green); }
+      .b-table { width:100%; border-collapse:collapse; }
+      .b-table th,.b-table td { padding:10px 8px; border-bottom:1px solid var(--line); font-size:12px; text-align:left; white-space:nowrap; }
+      .b-table th { color:var(--muted); }
+
+      /* Direction C */
+      .screen-c {
+        min-height: calc(100vh - 96px);
+        display:grid;
+        grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);
+        gap:12px;
+      }
+      .c-hero {
+        position:relative; overflow:hidden; border-radius:18px; min-height:680px; color:#fff;
+        background:
+          linear-gradient(180deg,rgba(9,24,20,.18),rgba(9,24,20,.82)),
+          radial-gradient(circle at 70% 28%,rgba(51,160,111,.28),transparent 30%),
+          linear-gradient(135deg,#123027,#1d4b3b);
+      }
+      .c-hero::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px); background-size:42px 42px; }
+      .c-copy { position:absolute; left:32px; top:30px; width:560px; z-index:2; }
+      .c-copy span { display:inline-flex; min-height:30px; align-items:center; padding:0 11px; border:1px solid rgba(255,255,255,.16); border-radius:999px; background:rgba(255,255,255,.09); font-size:12px; font-weight:900; }
+      .c-copy h2 { margin-top:18px; font-size:42px; line-height:1.08; }
+      .c-copy p { margin-top:14px; color:rgba(255,255,255,.72); line-height:1.65; }
+      .c-route { position:absolute; inset:210px 34px 120px; z-index:2; }
+      .c-route svg { width:100%; height:100%; overflow:visible; }
+      .c-route path { fill:none; stroke:rgba(255,255,255,.35); stroke-width:2; stroke-dasharray:8 9; }
+      .c-dot { position:absolute; z-index:3; width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:#fff; color:var(--green); font-weight:900; transform:translate(-50%,-50%); box-shadow:0 16px 30px rgba(0,0,0,.28); }
+      .c-metrics { position:absolute; z-index:3; left:28px; right:28px; bottom:24px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+      .c-metric { min-height:78px; padding:12px; border:1px solid rgba(255,255,255,.14); border-radius:14px; background:rgba(255,255,255,.09); backdrop-filter:blur(10px); }
+      .c-metric span { color:rgba(255,255,255,.62); font-size:11px; font-weight:900; }
+      .c-metric strong { display:block; margin-top:10px; font-size:26px; }
+      .c-side { display:grid; gap:12px; }
+      .c-card { border:1px solid var(--line); border-radius:16px; background:#fff; overflow:hidden; }
+      .c-card h3 { font-size:15px; padding:14px 16px; border-bottom:1px solid var(--line); }
+      .c-card-body { padding:14px; }
+      .c-report { min-height:160px; padding:14px; border-left:4px solid var(--green); border-radius:12px; background:#edf7f2; line-height:1.65; color:#2e463e; }
+      .c-list { display:grid; gap:9px; }
+      .c-item { display:grid; grid-template-columns:30px minmax(0,1fr) 48px; gap:9px; align-items:center; min-height:46px; padding:9px; border:1px solid var(--line); border-radius:12px; }
+      .c-item b { display:grid; place-items:center; width:30px; height:30px; border-radius:8px; background:#e7f2ed; color:var(--green); }
+      .c-item strong { display:block; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; font-size:13px; }
+      .c-item small { display:block; margin-top:3px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; color:var(--muted); font-size:11px; }
+      .c-item span { color:var(--green); font-weight:900; }
+
+      @media (max-width: 1100px) {
+        .top, .screen-a, .b-main, .screen-c { grid-template-columns:1fr; }
+        .a-kpis,.b-filters,.c-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="top">
+        <div class="brand">
+          <div class="mark">址</div>
+          <div>
+            <h1>黔址优选</h1>
+            <p>公共数据赛道 / 商业智能选址</p>
+          </div>
+        </div>
+        <div class="tabs" id="tabs">
+          <button class="active" data-target="a">A 政企大屏</button>
+          <button data-target="b">B 运营控制台</button>
+          <button data-target="c">C 路演产品页</button>
+        </div>
+        <span class="api-status" id="apiStatus">API 检测中</span>
+        <button class="btn" id="exportReport">导出报告</button>
+      </header>
+
+      <section class="stage">
+        <section id="concept-a" class="concept active">
+          <div class="screen-a">
+            <aside class="a-panel">
+              <div class="a-head"><h2>场景</h2><span>Preset</span></div>
+              <div class="a-body a-nav">
+                <button class="active">景区餐饮</button>
+                <button>民族文创</button>
+                <button>研学服务</button>
+                <button>康养民宿</button>
+              </div>
+            </aside>
+            <main>
+              <div class="a-kpis">
+                <div class="a-kpi"><span>候选片区</span><strong>10</strong></div>
+                <div class="a-kpi"><span>公共数据源</span><strong>8</strong></div>
+                <div class="a-kpi"><span>最高分</span><strong>87</strong></div>
+                <div class="a-kpi"><span>风险预警</span><strong>3</strong></div>
+              </div>
+              <div class="a-map">
+                <div class="province">
+                  <svg viewBox="0 0 720 480">
+                    <path class="main" d="M158 140 L226 82 L328 72 L415 100 L500 88 L588 142 L602 226 L566 296 L588 370 L496 422 L390 406 L304 438 L220 398 L146 344 L106 250 Z" />
+                    <path class="line" d="M190 158 C260 146, 280 116, 352 120 S470 170, 556 150" />
+                    <path class="line" d="M152 246 C228 210, 310 234, 386 202 S500 192, 580 244" />
+                    <path class="line" d="M178 328 C250 292, 330 336, 402 306 S505 300, 548 350" />
+                  </svg>
+                </div>
+                <button class="apoint" style="left:60%;top:72%">1</button><div class="atag" style="left:60%;top:72%"><strong>荔波小七孔东门</strong><span>优先 / 87 / 可控</span></div>
+                <button class="apoint warn" style="left:39%;top:55%">2</button><div class="atag" style="left:39%;top:55%"><strong>黄果树游客集散</strong><span>审慎 / 84 / 竞争</span></div>
+                <button class="apoint" style="left:33%;top:42%">3</button><div class="atag" style="left:33%;top:42%"><strong>青岩古镇南街</strong><span>优先 / 82 / 可控</span></div>
+                <button class="apoint danger" style="left:75%;top:58%">4</button><div class="atag" style="left:75%;top:58%"><strong>西江千户苗寨</strong><span>审慎 / 79 / 信用</span></div>
+              </div>
+            </main>
+            <aside class="a-panel">
+              <div class="a-head"><h2>研判</h2><span>AI</span></div>
+              <div class="a-body">
+                <div class="a-rank">
+                  <div class="a-row"><b>1</b><div><strong>荔波小七孔东门</strong><small>生态游 / 政策适配</small></div><span>87</span></div>
+                  <div class="a-row"><b>2</b><div><strong>黄果树游客集散</strong><small>客流强 / 竞争核验</small></div><span>84</span></div>
+                  <div class="a-row"><b>3</b><div><strong>青岩古镇南街</strong><small>消费强 / 文创适配</small></div><span>82</span></div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="concept-b" class="concept">
+          <div class="screen-b">
+            <div class="b-top">
+              <div><h2>公共数据选址运营控制台</h2><p>贵州文旅商业片区 / 多源数据融合 / 可解释评分</p></div>
+              <button class="btn">生成推荐</button>
+            </div>
+            <div class="b-filters">
+              <div class="b-filter"><span>业态</span><strong>景区餐饮</strong></div>
+              <div class="b-filter"><span>区域</span><strong>全省</strong></div>
+              <div class="b-filter"><span>策略</span><strong>稳健</strong></div>
+              <div class="b-filter"><span>预算</span><strong>标准店</strong></div>
+              <div class="b-filter"><span>数据覆盖</span><strong>100%</strong></div>
+            </div>
+            <div class="b-main">
+              <div class="b-card">
+                <div class="b-card-head"><h3>候选片区分布</h3><span class="sub">Map / Score</span></div>
+                <div class="b-canvas">
+                  <div class="b-city" style="left:10%;top:15%"><strong>赤水丹霞</strong><span>72 分 / 成本可控</span><i style="width:72%"></i></div>
+                  <div class="b-city" style="left:36%;top:20%"><strong>青岩古镇</strong><span>82 分 / 消费强</span><i style="width:82%"></i></div>
+                  <div class="b-city" style="left:58%;top:28%"><strong>梵净山换乘</strong><span>80 分 / 补给刚需</span><i style="width:80%"></i></div>
+                  <div class="b-city" style="left:50%;top:58%"><strong>荔波小七孔</strong><span>87 分 / 首选</span><i style="width:87%"></i></div>
+                  <div class="b-city" style="left:73%;top:55%"><strong>西江苗寨</strong><span>79 分 / 信用核验</span><i style="width:79%"></i></div>
+                </div>
+              </div>
+              <aside class="b-card">
+                <div class="b-card-head"><h3>首选片区</h3><span class="sub">87</span></div>
+                <div class="b-side">
+                  <div class="b-score"><strong>87</strong></div>
+                  <table class="b-table">
+                    <tr><th>片区</th><td>荔波小七孔东门</td></tr>
+                    <tr><th>优势</th><td>生态游 / 政策</td></tr>
+                    <tr><th>风险</th><td>淡旺季波动</td></tr>
+                    <tr><th>动作</th><td>旺季预测</td></tr>
+                  </table>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section id="concept-c" class="concept">
+          <div class="screen-c">
+            <section class="c-hero">
+              <div class="c-copy">
+                <span>公共数据赛道 / 商业智能选址</span>
+                <h2>把贵州文旅公共数据变成可执行的开店决策</h2>
+                <p>系统融合工商、信用、就业、人口、POI、交通客流与景区热度，输出候选片区、风险证据和真实数据申请清单。</p>
+              </div>
+              <div class="c-route">
+                <svg viewBox="0 0 760 300">
+                  <path d="M90 220 C210 70, 345 210, 460 105 S640 95, 700 210" />
+                </svg>
+              </div>
+              <div class="c-dot" style="left:16%;top:65%">1</div>
+              <div class="c-dot" style="left:43%;top:50%">2</div>
+              <div class="c-dot" style="left:68%;top:36%">3</div>
+              <div class="c-dot" style="left:84%;top:62%">4</div>
+              <div class="c-metrics">
+                <div class="c-metric"><span>候选</span><strong>10</strong></div>
+                <div class="c-metric"><span>首选分</span><strong>87</strong></div>
+                <div class="c-metric"><span>数据源</span><strong>8</strong></div>
+                <div class="c-metric"><span>预警</span><strong>3</strong></div>
+              </div>
+            </section>
+            <aside class="c-side">
+              <div class="c-card"><h3>AI 选址报告</h3><div class="c-card-body"><div class="c-report">首选荔波小七孔东门服务片区。优势来自生态游客流、竞争压力较低和政策适配度高；决赛阶段重点核验节假日客流与供应链半径。</div></div></div>
+              <div class="c-card"><h3>候选排序</h3><div class="c-card-body c-list">
+                <div class="c-item"><b>1</b><div><strong>荔波小七孔东门</strong><small>政策 / 生态游</small></div><span>87</span></div>
+                <div class="c-item"><b>2</b><div><strong>黄果树游客集散</strong><small>客流 / 竞争</small></div><span>84</span></div>
+                <div class="c-item"><b>3</b><div><strong>青岩古镇南街</strong><small>文创 / 消费</small></div><span>82</span></div>
+              </div></div>
+              <div class="c-card"><h3>数据申请</h3><div class="c-card-body c-list">
+                <div class="c-item"><b>D</b><div><strong>工商 + 信用</strong><small>主体状态 / 异常 / 投诉</small></div><span>必需</span></div>
+                <div class="c-item"><b>G</b><div><strong>客流 + POI</strong><small>节假日热力 / 设施</small></div><span>必需</span></div>
+              </div></div>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      document.getElementById("tabs").addEventListener("click", event => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        document.querySelectorAll("#tabs button").forEach(item => item.classList.toggle("active", item === button));
+        document.querySelectorAll(".concept").forEach(item => item.classList.remove("active"));
+        document.getElementById(`concept-${button.dataset.target}`).classList.add("active");
+      });
+      async function fetchApiReport() {
+        const response = await fetch("/api/report", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ businessType: "景区餐饮", region: "全省文旅片区" })
+        });
+        if (!response.ok) throw new Error("api unavailable");
+        return (await response.json()).report;
+      }
+
+      async function refreshApiStatus() {
+        try {
+          const health = await fetch("/api/health").then(response => response.json());
+          document.getElementById("apiStatus").textContent = health.ok ? "API 已连接" : "API 异常";
+        } catch {
+          document.getElementById("apiStatus").textContent = "静态预览";
+        }
+      }
+
+      document.getElementById("exportReport").addEventListener("click", async () => {
+        let text = "黔址优选 UI 方向对比：A 政企大屏 / B 运营控制台 / C 路演产品页";
+        try {
+          text = await fetchApiReport();
+        } catch {
+          document.getElementById("apiStatus").textContent = "报告使用本地文本";
+        }
+        const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "黔址优选-UI方向对比.txt";
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+      refreshApiStatus();
+    </script>
+  </body>
+</html>

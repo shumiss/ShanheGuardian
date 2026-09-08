@@ -1,0 +1,13 @@
+{
+  "name": "qianzhi-public-data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/smoke-test.mjs && node tests/tourism-api-test.mjs && node tests/incident-api-test.mjs && node tests/ascend-adapter-test.mjs",
+    "benchmark:route": "node tests/route-optimizer-benchmark.mjs",
+    "collect:scenic": "node scripts/collect-guizhou-scenic-data.mjs",
+    "start": "node server.js",
+    "static": "python -m http.server 8092"
+  }
+}

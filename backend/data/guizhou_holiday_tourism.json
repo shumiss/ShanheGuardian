@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "name": "贵州节假日文旅热度公开样本",
+    "updatedAt": "2026-06-16",
+    "note": "公开报道统计样本，用于节假日拥堵/热度风险校准；不是实时票务或实时客流数据。"
+  },
+  "records": [
+    {
+      "id": "gz-2025-new-year",
+      "holiday": "2025年元旦假期",
+      "period": "2025-01-01",
+      "provinceVisitsText": "269.38万人次",
+      "tourismRevenueText": "15.87亿元",
+      "keyScenicVisitsText": "60个重点监测旅游景区累计接待游客43.61万人次",
+      "keyScenicRevenueText": "重点监测旅游景区旅游收入1.52亿元",
+      "hotspots": ["黔灵山公园", "黄果树旅游景区", "青岩古镇", "西江千户苗寨"],
+      "riskUse": "元旦短假适合校准城市近郊、公园古镇、重点景区短时客流峰值。",
+      "sourceName": "文化和旅游部：贵州元旦假期文化和旅游市场平稳有序",
+      "sourceUrl": "https://www.mct.gov.cn/whzx/qgwhxxlb/gz/202501/t20250102_957572.htm"
+    },
+    {
+      "id": "gz-2025-spring-festival",
+      "holiday": "2025年春节假期",
+      "period": "2025-01-28 至 2025-02-04",
+      "provinceVisitsText": "",
+      "tourismRevenueText": "",
+      "keyScenicVisitsText": "",
+      "keyScenicRevenueText": "",
+      "hotspots": ["织金洞", "梵净山", "西江千户苗寨", "肇兴侗寨", "黄果树旅游景区"],
+      "riskUse": "春节长假适合校准家庭出游、返乡客流、民族村寨夜游和山地景区排队风险。",
+      "sourceName": "文化和旅游部：2025年春节假期贵州文化和旅游市场繁荣有序",
+      "sourceUrl": "https://www.mct.gov.cn/whzx/qgwhxxlb/gz/202502/t20250206_957979.htm"
+    },
+    {
+      "id": "gz-2024-national-day-sample",
+      "holiday": "2024年国庆假期样本",
+      "period": "2024-10-01 至 2024-10-07",
+      "provinceVisitsText": "2024年1至10月全省接待游客6.26亿人次",
+      "tourismRevenueText": "2024年1至10月游客总花费7512.49亿元",
+      "keyScenicVisitsText": "荔波小七孔景区国庆假期累计接待游客34.46万人次",
+      "keyScenicRevenueText": "",
+      "hotspots": ["荔波小七孔", "黄果树旅游景区", "西江千户苗寨", "梵净山"],
+      "riskUse": "国庆长假适合校准热门景区高位承载、连续多日限流和跨市州交通压力。",
+      "sourceName": "文化和旅游部：贵州文旅持续火热 多项指标创新高",
+      "sourceUrl": "https://www.mct.gov.cn/whzx/qgwhxxlb/gz/202411/t20241113_956192.htm"
+    }
+  ]
+}

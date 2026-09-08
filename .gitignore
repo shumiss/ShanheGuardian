@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vite/
+.env
+.env.*
+!.env.example
+*.log
+vite.out.log
+vite.err.log
+outputs/
+work/*
+!work/route-benchmark-latest.json
+backend/data/scenic-photo-cache/
+backend/data/runtime_incidents.json
+backend/crowd-check.json
+.DS_Store
+Thumbs.db
